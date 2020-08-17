@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dbchaos-deployment
+spec:
+  selector:
+    matchLabels:
+      app: dbchaos
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dbchaos
+    spec:
+      containers:
+        - name: dbchaos
+          image: andymacdonald/dbchaos:1
+          env:
+            - name: DATABASE_HOST
+              value: postgresql
+            - name: DATABASE_PORT
+              value: 5432
+            - name: DATABASE_TYPE
+              value: PostgreSQL
+            - name: DATABASE_USERNAME
+              value: mydbuser
+            - name: DATABASE_PASSWORD
+#              valueFrom:
+#                secretKeyRef:
+#                  name: dbpassword
+#                  key: password
+              value: mysupersecretpassword
+            - name: MAX_CONNECTIONS_TO_LEAK
+              value: 500
+            - name: CONNECTION_CREATION_WAIT_MS
+              value: 5000
+            - name: CONNECTION_LEAK_HOLD_MS
+              value: 30000

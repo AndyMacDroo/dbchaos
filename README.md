@@ -10,7 +10,7 @@ Currently supports:
 
 ## Running Tests
 
-You can run the client tests with:
+You can run the unit tests with:
 
 ```shell script
 docker-compose up

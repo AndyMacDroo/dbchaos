@@ -1,0 +1,49 @@
+version: '2.1'
+services:
+  mysql:
+    image: mysql:5.7
+    restart: always
+    environment:
+      MYSQL_DATABASE: 'db'
+      MYSQL_USER: 'user'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    volumes:
+      - './scripts/db/mysql/:/docker-entrypoint-initdb.d/'
+    ports:
+      - "3306:3306"
+    healthcheck:
+      test: "/usr/bin/mysql --user=user --password=password --execute \"SHOW DATABASES;\""
+      timeout: 20s
+      retries: 10
+
+  postgres:
+    image: postgres:11-alpine
+    restart: always
+    environment:
+      POSTGRES_DB: 'db'
+      POSTGRES_USER: 'user'
+      POSTGRES_PASSWORD: 'password'
+    volumes:
+      - './scripts/db/postgres/:/docker-entrypoint-initdb.d/'
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  dbchaostests:
+    build: .
+    environment:
+      POSTGRES_HOST: 'postgres'
+      MYSQL_HOST: 'mysql'
+      DATABASE_USERNAME: 'user'
+      DATABASE_PASSWORD: 'password'
+    depends_on:
+      mysql:
+        condition: service_healthy
+      postgres:
+        condition: service_healthy
+    command: go test ./...

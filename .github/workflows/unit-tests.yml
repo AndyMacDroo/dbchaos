@@ -1,0 +1,11 @@
+name: client-test
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@master
+      - name: Client Test
+        run: docker-compose up --abort-on-container-exit --exit-code-from dbchaostests

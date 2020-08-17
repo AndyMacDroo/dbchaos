@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: dbchaos
-          image: andymacdonald/dbchaos:1
+          image: andymacdonald/dbchaos:latest
           env:
             - name: DATABASE_HOST
               value: postgresql

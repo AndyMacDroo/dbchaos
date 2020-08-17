@@ -35,14 +35,23 @@ docker-compose up --abort-on-container-exit --exit-code-from dbchaostests
 The following environment variables can be used to configure the application.
 
 `CHAOS_MODE` - What chaos mode to use, one of `CONNECTION_LEAK` or (tba) `QUERY_BURST`.
+
 `DATABASE_HOST` - Host/IP of a given database.
+
 `DATABASE_PORT` - Port for a given database.
+
 `DATABASE_PASSWORD` - Password for a given database.
+
 `DATABASE_USERNAME` - Username for a given database.
+
 `DATABASE_TYPE` - One of `MySQL` or `PostgreSQL`.
+
 `DATABASE_NAME` - The name of the database.
+
 `MAX_CONNECTIONS_TO_LEAK` - Number of connections to leak.
+
 `CONNECTION_CREATION_WAIT_MS` - Wait in milliseconds between creation of connections.
+
 `CONNECTION_LEAK_HOLD_MS` - Wait time in milliseconds to keep hold of leaked connections.
 
 ## Kubernetes Deployment

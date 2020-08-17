@@ -9,3 +9,10 @@ jobs:
         uses: actions/checkout@master
       - name: Unit Tests
         run: docker-compose up --abort-on-container-exit --exit-code-from dbchaostests
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: andymacdonald/dbchaos
+          tags: latest
